@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+  <title>DelayCam PWA</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0b0b0b">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="apple-touch-icon" href="icon-192.png">
+</head>
+<body>
+  <header class="app-header">
+    <div>
+      <h1>DelayCam</h1>
+      <p>Hands-free delayed replay for golf and sports training</p>
+    </div>
+    <p class="hint" id="usage-hint">Hold the tablet upright. Swing, watch the ball, then look back at your delayed swing — no buttons needed.</p>
+  </header>
+
+  <main>
+    <div id="video-wrapper" class="video-container vertical-view">
+      <video id="live-video" autoplay playsinline muted></video>
+      <canvas id="review-canvas"></canvas>
+      <div id="status-overlay" class="overlay">Camera Offline</div>
+      <div id="mode-pill" class="mode-pill" hidden>Live Delay</div>
+      <div id="review-deck" class="review-deck disabled">
+        <div class="timeline-container">
+          <button id="step-prev" class="step-btn" type="button">⏮ Older</button>
+          <input type="range" id="scrub-slider" min="0" max="0" value="0" aria-label="Review scrubber">
+          <button id="step-next" class="step-btn" type="button">Newer ⏭</button>
+        </div>
+        <div class="deck-actions">
+          <button id="play-pause-btn" class="secondary-btn" type="button">⏸ Pause &amp; Inspect</button>
+          <span id="frame-counter">Frame: 0 / 0</span>
+        </div>
+        <p class="scrub-caption">Pause freezes recording. Scrub only through frames already captured — never anything after you paused.</p>
+      </div>
+    </div>
+
+    <div class="controls-grid">
+      <div class="control-card">
+        <h3>Camera Profile</h3>
+        <div class="toggle-group">
+          <label class="switch">
+            <input type="checkbox" id="orientation-toggle" checked>
+            <span class="slider round"></span>
+          </label>
+          <span id="orientation-label">Mode: Vertical (9:16)</span>
+        </div>
+        <p class="field-note">Vertical fills a tablet held upright — best for golf. Turn off for widescreen sports.</p>
+        <div class="range-group">
+          <label for="delay-range">Delay: <span id="delay-val">6</span> seconds</label>
+          <input type="range" id="delay-range" min="2" max="12" value="6">
+        </div>
+        <button id="start-btn" class="primary-btn" type="button">Start Camera Engine</button>
+      </div>
+
+      <div class="control-card">
+        <h3>Audio Cue System</h3>
+        <div class="toggle-group">
+          <label class="switch">
+            <input type="checkbox" id="audio-toggle">
+            <span class="slider round"></span>
+          </label>
+          <span>Enable rhythmic cues</span>
+        </div>
+        <div class="range-group">
+          <label for="interval-range">Interval: <span id="interval-val">30</span>s rhythm</label>
+          <input type="range" id="interval-range" min="15" max="60" step="5" value="30">
+        </div>
+        <div id="countdown-display" class="countdown-text">Cues optional</div>
+      </div>
+    </div>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
